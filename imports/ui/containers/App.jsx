@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-import Messages from '../containers/Messages'
-import TextInput from '../components/TextInput'
+import MessagesList from '../containers/MessagesList';
+import TextInput from '../components/TextInput';
 
 export default class App extends Component {
   componentDidMount(){
-    console.log('w00t we have react')
+    console.log('w00t we have react');
   }
 
   render() {
@@ -13,7 +13,7 @@ export default class App extends Component {
       <div className="container">
         <header>
           <h1>Chat App</h1>
-          <Messages />
+          <MessagesList />
           <TextInput />
         </header>
       </div>
