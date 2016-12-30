@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 
-import { Messages } from '../../api/messages.js'
+import { Messages } from '../../api/messages.js';
 
 export default class TextInput extends Component {
 
   handleSubmit(event){
     event.preventDefault();
     console.log(this.refs.textInput.value);
-    Messages.insert( { text: this.refs.textInput.value.trim(), createdAt: new Date() } )
+    Messages.insert({
+      text: this.refs.textInput.value.trim(),
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username,
+    });
   }
 
   render() {
