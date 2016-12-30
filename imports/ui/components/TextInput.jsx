@@ -7,12 +7,7 @@ export default class TextInput extends Component {
   handleSubmit(event){
     event.preventDefault();
     console.log(this.refs.textInput.value);
-    Messages.insert({
-      text: this.refs.textInput.value.trim(),
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
+    Meteor.call('messages.insert', this.refs.textInput.value.trim());
   }
 
   render() {
