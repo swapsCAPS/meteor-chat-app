@@ -7,7 +7,7 @@ export default class TextInput extends Component {
   handleSubmit(event){
     event.preventDefault();
     const msg = this.refs.textInput.value.trim();
-    if(msg.length === 0) return
+    if(msg.length === 0) return;
     Meteor.call('messages.insert', msg);
     Meteor.call('users.update', msg);
     this.refs.textInput.value = '';
@@ -16,7 +16,7 @@ export default class TextInput extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <input className="text-input" ref="textInput" placeholder="start typing : )" type="text"/>
+        <input className="text-input" ref="textInput" placeholder="Start typing : )" type="text"/>
       </form>
     );
   }
