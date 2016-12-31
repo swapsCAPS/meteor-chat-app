@@ -1,10 +1,21 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
 import '../imports/startup/accounts-config';
 import App from '../imports/ui/containers/App';
+import UsersList from '../imports/ui/containers/UsersList';
+import ChatsList from '../imports/ui/containers/ChatsList';
+import NotFoundView from '../imports/ui/components/NotFoundView';
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById('render-target'));
+  render(
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute component={UsersList} />
+        <Route path="*" component={NotFoundView}/>
+      </Route>
+    </Router>,
+    document.getElementById('render-target'));
 });
