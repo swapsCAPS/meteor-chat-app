@@ -2,8 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import AccountsUIWrapper from '../containers/AccountsUIWrapper';
-import MessagesList from '../containers/MessagesList';
+import ChatsList from '../containers/ChatsList';
+import UsersList from '../containers/UsersList';
+import ChatView from '../containers/ChatView';
 import TextInput from '../components/TextInput';
+import TypingUsers from '../components/TypingUsers';
+
+import './App.sass'
 
 export class App extends Component {
   componentDidMount(){
@@ -12,25 +17,23 @@ export class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        { 
-          this.props.currentUser ? 
-            <div>
-              <header>
-                <h1>Chat App</h1>
-              </header>
-              <MessagesList />
-              <TextInput />
-            </div>
-            : <AccountsUIWrapper /> 
-        }
-      </div>
+      this.props.currentUser ? 
+        <div className="container">
+          <div className="side-bar">
+            <ChatsList />
+            <UsersList />
+          </div>
+          <ChatView />
+        </div>
+      : <AccountsUIWrapper /> 
     );
   }
 }
 
 export default createContainer(() => {
+  Meteor.subscribe('userList');
   return {
+    allUsers: Meteor.users.find({}).fetch(),
     currentUser: Meteor.user()
   };
 }, App);

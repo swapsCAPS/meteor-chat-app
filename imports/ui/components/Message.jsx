@@ -2,15 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 
 export default class Message extends Component {
+  belongsToCurrentUser() {
+    return this.props.message.owner === this.props.currentUser._id;
+  }
+
+  alignment() {
+    return this.belongsToCurrentUser() ? { justifyContent: 'flex-end' } : null
+  }
 
   render() {
     return (
-      <div className="message">
-        <span>{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
-        <span> - </span>
-        <span>{ this.props.message.username }</span>
-        <span> says: </span>
-        <span>{ this.props.message.text }</span>
+      <div className="message-container" style={this.alignment()}>
+        <div className="message">
+          <span className="text">{ this.props.message.text }</span>
+          <span className="time">{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
+      </div>
       </div>
     );
   }
@@ -18,4 +24,5 @@ export default class Message extends Component {
 
 Message.propTypes = {
   message: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
