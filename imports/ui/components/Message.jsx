@@ -24,8 +24,8 @@ export default class Message extends Component {
           </div>
           <div className="time">
             <span>{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
-      </div>
-      </div>
+          </div>
+        </div>
       </div>
     );
   }

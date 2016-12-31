@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Scroll from 'react-scroll';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Messages } from '../../api/messages.js';
@@ -6,16 +7,30 @@ import { Messages } from '../../api/messages.js';
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 
-import './ChatView.sass'
+import './ChatView.sass';
 
 export class ChatView extends Component {
+  componentDidMount() {
+    // TODO fix this bia : /
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100)
+  }
+
+  componentWillUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(){
+    Scroll.animateScroll.scrollToBottom({isDynamic: true, containerId: 'messages-view'});
+  }
 
   render() {
     return (
-      <div className="chat">
-        <div className="messages">
+      <div id="chat" className="chat">
+        <div id="messages-view" className="messages">
           {
-            this.props.messages.map((message) => {
+            this.props.messages.map((message, index) => {
               return <Message key={ message._id } message={ message } currentUser={ this.props.currentUser }/>;
             })
           }
