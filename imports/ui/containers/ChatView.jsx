@@ -21,8 +21,8 @@ export class ChatView extends Component {
     this.scrollToBottom();
   }
 
-  scrollToBottom(){
-    Scroll.animateScroll.scrollToBottom({isDynamic: true, containerId: 'messages-view'});
+  scrollToBottom() {
+    Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
   }
 
   render() {
@@ -48,6 +48,7 @@ ChatView.propTypes = {
 };
 
 export default createContainer(() => {
+  // TODO only get the messages in this chat, e.g. the chat where both users are in
   Meteor.subscribe('messages');
   return {
     messages: Messages.find({}).fetch(),
