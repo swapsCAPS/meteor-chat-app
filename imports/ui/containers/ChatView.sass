@@ -1,12 +1,16 @@
+$background-color: #B3E5FC
+$msg-background-color: #F5F5F5
+$text-dark: #263238
+$text-med: #90A4AE
+$text-light: #B0BEC5
+
 .chat
   width: 100%
-  background: #B3E5FC
+  background: $background-color
   display: flex
   flex-direction: column
 
 .messages
-  ::-webkit-scrollbar
-    display: none
   padding-top: 8px
   overflow-y: scroll
 
@@ -22,7 +26,7 @@
   display: flex
 
   .msg-container
-    background: #F5F5F5
+    background: $msg-background-color
     display: flex
     min-width: 100px
     padding: 4px 8px
@@ -30,7 +34,7 @@
     flex-direction: column
 
     .msg-username
-      color: #B0BEC5
+      color: $text-med
       letter-spacing: 1px
       font-size: 12px
       margin-bottom: 4px
@@ -46,6 +50,7 @@
         justify-content: center
         span
           font-size: 18px
+          color: $text-dark
           max-width: 400px
           word-wrap: break-word
 
@@ -55,7 +60,7 @@
         justify-content: flex-end
         span
           font-size: 10px
-          color: #CFD8DC
+          color: $text-light
           margin-left: 20px
 
 .text-input
