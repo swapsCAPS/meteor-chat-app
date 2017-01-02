@@ -8,7 +8,7 @@ import ChatView from '../containers/ChatView';
 import TextInput from '../components/TextInput';
 import TypingUsers from '../components/TypingUsers';
 
-import './App.sass'
+import './App.sass';
 
 export class App extends Component {
   componentDidMount(){
@@ -31,9 +31,7 @@ export class App extends Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('userList');
   return {
-    allUsers: Meteor.users.find({}).fetch(),
     currentUser: Meteor.user()
   };
 }, App);

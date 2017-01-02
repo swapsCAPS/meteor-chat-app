@@ -9,7 +9,7 @@ export default class TextInput extends Component {
     const msg = this.refs.textInput.value.trim();
     if(msg.length === 0) return;
     Meteor.call('messages.insert', msg);
-    Meteor.call('users.update', msg);
+    Meteor.call('users.isTyping', true);
     this.refs.textInput.value = '';
   }
 
