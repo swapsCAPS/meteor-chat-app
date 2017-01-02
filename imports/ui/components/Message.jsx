@@ -17,13 +17,16 @@ export default class Message extends Component {
 
   render() {
     return (
-      <div className="message-container" style={this.alignment()}>
-        <div className="message">
-          <div className="text">
-            <span>{ this.props.message.text }</span>
-          </div>
-          <div className="time">
-            <span>{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
+      <div className="msg-row" style={this.alignment()}>
+        <div className="msg-container">
+          <span className="msg-username">{ this.props.message.username }</span>
+          <div className="msg-content">
+            <div className="text">
+              <span>{ this.props.message.text }</span>
+            </div>
+            <div className="time">
+              <span>{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
+            </div>
           </div>
         </div>
       </div>
