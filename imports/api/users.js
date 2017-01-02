@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 if (Meteor.isServer) {
-  Meteor.publish('usersList', function usersPublication() {
+  Meteor.publish('users', function usersPublication() {
     return Meteor.users.find({}, { fields: { 'username': 1} });
   });
 }

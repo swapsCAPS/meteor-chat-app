@@ -11,27 +11,36 @@ import TypingUsers from '../components/TypingUsers';
 import './App.sass';
 
 export class App extends Component {
+  state = {
+    currentChatId: ''
+  }
+
+  setCurrentChatId(id) {
+    console.log(id)
+    this.setState( { currentChatId: id } );
+  }
+
   componentDidMount(){
     console.log('w00t we have react');
   }
 
   render() {
     return (
-      this.props.currentUser ? 
+      this.props.currentUser ?
         <div className="container">
           <div className="side-bar">
-            <ChatsList />
+            <ChatsList setChatId={ this.setCurrentChatId.bind(this) }/>
             <UsersList />
           </div>
-          <ChatView />
+          <ChatView currentChatId={ this.state.currentChatId }/>
         </div>
-      : <AccountsUIWrapper /> 
+      : <AccountsUIWrapper />
     );
   }
 }
 
 export default createContainer(() => {
   return {
-    currentUser: Meteor.user()
+    currentUser: Meteor.user(),
   };
 }, App);

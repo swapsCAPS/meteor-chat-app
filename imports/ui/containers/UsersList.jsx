@@ -8,6 +8,10 @@ import './List.sass';
 
 export class UsersList extends Component {
 
+  newChat(id) {
+    Meteor.call('chats.new', id);
+  }
+
   render() {
     return (
       <div className="user-list">
@@ -15,7 +19,7 @@ export class UsersList extends Component {
         {
           this.props.users.map((u) => {
             return (
-              <div>
+              <div onClick={ this.newChat.bind(this, u._id) } key={ u._id }>
                 <span>{ u.username }</span>
               </div>
             );
@@ -31,7 +35,7 @@ UsersList.propTypes = {
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('usersList');
+  Meteor.subscribe('users');
   return {
     users: Meteor.users.find({}).fetch(),
   };

@@ -6,12 +6,13 @@ export const Messages = new Mongo.Collection('messages');
 
 if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication() {
+    // TODO return messages of chats where this user belongs to
     return Messages.find();
   });
 }
 
 Meteor.methods({
-  'messages.insert'(text) {
+  'messages.insert'(text, chatId) {
     check(text, String);
 
     if(!this.userId) {
@@ -22,6 +23,7 @@ Meteor.methods({
       text,
       createdAt: new Date(),
       owner: Meteor.userId(),
+      chatId: chatId,
       username: Meteor.users.findOne(this.userId).username,
     });
   },
