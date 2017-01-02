@@ -24,7 +24,8 @@
     "eslint-plugin-react": "^6.8.0"
   },
   "babel": {
-    "plugins": ["transform-class-properties"]
-
+    "plugins": [
+      "transform-class-properties"
+    ]
   }
 }
