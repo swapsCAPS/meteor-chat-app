@@ -8,6 +8,10 @@ if (Meteor.isServer) {
   Meteor.publish('chats', function chatsPublication() {
     return Chats.find( { members: this.userId } );
   });
+  Meteor.publish('singleChat', function singleChatPublication(chatId) {
+    // TODO check if this user is in this chat
+    return Chats.findOne( { '_id': chatId } );
+  });
 }
 
 Meteor.methods({
@@ -15,6 +19,9 @@ Meteor.methods({
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
+
+    // TODO Check if chat already exists
+
     Chats.insert({
       createdAt: new Date(),
       owner: Meteor.userId(),
