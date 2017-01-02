@@ -12,7 +12,7 @@ export default class Message extends Component {
   }
 
   alignment() {
-    return this.belongsToCurrentUser() ? { justifyContent: 'flex-end' } : null
+    return this.belongsToCurrentUser() ? { justifyContent: 'flex-end' } : null;
   }
 
   render() {
