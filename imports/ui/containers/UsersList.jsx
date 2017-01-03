@@ -17,8 +17,8 @@ export class UsersList extends Component {
 
   render() {
     return (
-      <div className="user-list">
-        <h1 className="title">Users:</h1>
+      <div className="list">
+        <h2 className="title">New chat</h2>
         {
           this.props.users.map((u) => {
             return (

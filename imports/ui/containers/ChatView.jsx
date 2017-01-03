@@ -7,7 +7,7 @@ import { Chats } from '../../api/chats.js';
 
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
-import NotFoundView from '../components/NotFoundView';
+import Splash from '../components/Splash';
 import UserNameById from '../components/UserNameById';
 
 import './ChatView.sass';
@@ -50,7 +50,7 @@ export class ChatView extends Component {
             <TextInput currentChatId={ this.props.currentChatId }/>
           </div>
         </div>
-      : <NotFoundView />
+      : <Splash username={ this.props.currentUser.username }/>
     );
   }
 }

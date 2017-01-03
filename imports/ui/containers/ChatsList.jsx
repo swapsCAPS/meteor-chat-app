@@ -30,8 +30,8 @@ export class ChatsList extends Component {
 
   render() {
     return (
-      <div className="chats-list">
-        <h1 className="title">Chats:</h1>
+      <div className="list">
+        <h2 className="title">Chats:</h2>
         {
           this.props.chats.map((c, i) => {
             return this.renderListItem(c);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 export default class TypingUsers extends Component {
-
   render() {
     return (
       <div>
@@ -13,5 +12,4 @@ export default class TypingUsers extends Component {
       </div>
     );
   }
-
 }

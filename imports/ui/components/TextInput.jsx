@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import { Messages } from '../../api/messages.js';
 
@@ -20,3 +20,7 @@ export default class TextInput extends Component {
     );
   }
 }
+
+TextInput.propTypes = {
+  currentChatId: PropTypes.string.isRequired,
+};

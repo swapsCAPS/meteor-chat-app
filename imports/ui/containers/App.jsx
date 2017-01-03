@@ -17,6 +17,8 @@ export class App extends Component {
 
   setCurrentChatId(id) {
     this.setState( { currentChatId: id } );
+    // Set latest chat so we can render it on app start
+    // TODO TODO
   }
 
   componentDidMount(){
