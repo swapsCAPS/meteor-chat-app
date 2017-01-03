@@ -5,9 +5,9 @@ import { check } from 'meteor/check';
 export const Messages = new Mongo.Collection('messages');
 
 if (Meteor.isServer) {
-  Meteor.publish('messages', function messagesPublication() {
-    // TODO return messages of chats where this user belongs to
-    return Messages.find();
+  Meteor.publish('messages', function messagesPublication(chatId) {
+    // TODO check if this user is in this chat
+    return Messages.find( { chatId: chatId } );
   });
 }
 
@@ -18,6 +18,8 @@ Meteor.methods({
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
+
+    // TODO check if the user is in this chat!
 
     Messages.insert({
       text,

@@ -16,7 +16,6 @@ export class App extends Component {
   }
 
   setCurrentChatId(id) {
-    console.log(id)
     this.setState( { currentChatId: id } );
   }
 
