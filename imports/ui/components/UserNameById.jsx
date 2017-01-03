@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 export class UserNameById extends Component {
   render() {
     return (
-      <span>{ this.props.user.username }</span>
+      <span className="username">{ this.props.user.username }</span>
     );
   }
 }

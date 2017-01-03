@@ -20,7 +20,7 @@ export class UsersList extends Component {
           this.props.users.map((u) => {
             return (
               <div onClick={ this.newChat.bind(this, u._id) } key={ u._id }>
-                <span>{ u.username }</span>
+                <span className="username">{ u.username }</span>
               </div>
             );
           })

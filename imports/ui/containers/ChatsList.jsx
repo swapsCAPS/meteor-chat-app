@@ -21,7 +21,7 @@ export class ChatsList extends Component {
         {
           chat.members.map((m, i) => {
             if(m === Meteor.userId()) return;
-            return <UserNameById key={ i } id={ m } />;
+            return <UserNameById className="username" key={ i } id={ m } />;
           })
         }
       </div>
