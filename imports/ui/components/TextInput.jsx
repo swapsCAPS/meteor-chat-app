@@ -5,8 +5,7 @@ import { Messages } from '../../api/messages.js';
 export default class TextInput extends Component {
 
   handleKeyUp(event) {
-    console.log(Date.now());
-    Meteor.call('chats.setMemberTyping', this.props.currentChatId, Date.now());
+    Meteor.call('chats.setMemberTyping', this.props.currentChatId, true);
   }
 
   handleSubmit(event) {

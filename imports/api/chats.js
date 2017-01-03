@@ -38,25 +38,43 @@ Meteor.methods({
       createdAt: new Date(),
       owner: Meteor.userId(),
       members: [ Meteor.userId(), otherUsersId ],
-      lastActive: [ 0, 0 ]
+      isTyping: [ false, false ]
     });
   },
-  'chats.setMemberTyping'(chatId, newTimestamp) {
+  'chats.setMemberTyping'(chatId, newIsTyping) {
+    // First check authorization
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
       throw new Meteor.Error('not-authorized');
     }
-    // This can propably lead to race conditions when multiple users are typing...
-    // TODO only update once every 2-5 seconds to give some time
-    // Man this is fugly TODO find better way of doing this...
+
+    /*
+     * This might lead to race conditions when multiple users are typing...
+     */
+
+    // Get the chat and the index of this typing user
     const chat = Chats.findOne(chatId);
     const indexOfTyper = chat.members.indexOf(this.userId);
-    const lastActiveArr = chat.lastActive.map((oldTimestamp, arrayIndex) => {
-      if(arrayIndex === indexOfTyper) return newTimestamp;
-      return oldTimestamp;
+
+    // If the value is the same do nothing
+    if(chat.isTyping[indexOfTyper] === newIsTyping) return;
+
+    // Value is not the same, get array from db, update it and save it again
+    const isTypingArr = chat.isTyping.map((oldIsTyping, arrayIndex) => {
+      if(arrayIndex === indexOfTyper) return newIsTyping;
+      return oldIsTyping;
     });
-    Chats.update({ _id: chatId }, { '$set': { lastActive: lastActiveArr } });
+    Chats.update({ _id: chatId }, { '$set': { isTyping: isTypingArr } });
+
+    // Wait for #### milliseconds and set user typing to false again
+    Meteor.setTimeout(() => {
+      const isTypingArr = chat.isTyping.map((oldIsTyping, arrayIndex) => {
+        if(arrayIndex === indexOfTyper) return false;
+        return oldIsTyping;
+      });
+      Chats.update({ _id: chatId }, { '$set': { isTyping: isTypingArr } });
+    }, 5000);
   },
 });

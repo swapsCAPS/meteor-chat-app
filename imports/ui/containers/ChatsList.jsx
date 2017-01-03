@@ -4,7 +4,7 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import UserNameById from '../components/UserNameById';
+import UsernameById from '../components/UsernameById';
 
 import { Chats } from '../../api/chats.js';
 
@@ -21,7 +21,7 @@ export class ChatsList extends Component {
         {
           chat.members.map((m, i) => {
             if(m === Meteor.userId()) return;
-            return <UserNameById key={ i } id={ m } />;
+            return <UsernameById key={ i } id={ m } />;
           })
         }
       </div>

@@ -8,7 +8,7 @@ import { Chats } from '../../api/chats.js';
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 import Splash from '../components/Splash';
-import UserNameById from '../components/UserNameById';
+import UsernameById from '../components/UsernameById';
 
 import './ChatView.sass';
 
@@ -20,8 +20,11 @@ export class ChatView extends Component {
     }, 100);
   }
 
-  componentWillUpdate() {
-    this.scrollToBottom();
+  componentWillUpdate(nextProps, nextState) {
+    // Only scroll down if the amount of messages changes
+    if(this.props.messages.length !== nextProps.messages.length) {
+      this.scrollToBottom();
+    }
   }
 
   scrollToBottom() {
@@ -30,26 +33,26 @@ export class ChatView extends Component {
 
   render() {
     return (
-      this.props.currentChatId ? 
-        <div id="chat" className="chat">
-          <div className="members-header">
-            {
-              this.props.chat.members.map((m, i) => {
-                return <UserNameById key={i} id={m} />;
-              })
-            }
-          </div>
-          <div id="messages-view" className="messages">
-            {
-              this.props.messages.map((message, index) => {
-                return <Message key={ message._id } message={ message } currentUser={ this.props.currentUser }/>;
-              })
-            }
-          </div>
-          <div className="input-footer">
-            <TextInput currentChatId={ this.props.currentChatId }/>
-          </div>
+      this.props.currentChatId ?
+      <div id="chat" className="chat">
+        <div className="members-header">
+          {
+            this.props.chat.isTyping.map((isTyping, i) => {
+              return <UsernameById key={i} isTyping={isTyping} id={this.props.chat.members[i]} />;
+            })
+          }
         </div>
+        <div id="messages-view" className="messages">
+          {
+            this.props.messages.map((message, index) => {
+              return <Message key={ message._id } message={ message } currentUser={ this.props.currentUser }/>;
+            })
+          }
+        </div>
+        <div className="input-footer">
+          <TextInput currentChatId={ this.props.currentChatId }/>
+        </div>
+      </div>
       : <Splash username={ this.props.currentUser.username }/>
     );
   }
