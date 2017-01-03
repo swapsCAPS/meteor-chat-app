@@ -8,22 +8,11 @@ import { Chats } from '../../api/chats.js';
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 import NotFoundView from '../components/NotFoundView';
+import UserNameById from '../components/UserNameById';
 
 import './ChatView.sass';
 
 export class ChatView extends Component {
-  getChat() {
-    return Chats.findOne(this.props.currentChatId);
-  }
-
-  getMessages() {
-    return Messages.find( { 'chatId': this.props.currentChatId} );
-  }
-
-  getMember(id) {
-    return Meteor.users.findOne(id);
-  }
-
   componentDidMount() {
     // TODO fix this bia : /
     setTimeout(() => {
@@ -35,28 +24,24 @@ export class ChatView extends Component {
     this.scrollToBottom();
   }
 
-  componentDidUpdate() {
-    console.log('Chatview updated displaying chat: %s', this.props.currentChatId);
-  }
-
   scrollToBottom() {
     Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
   }
 
   render() {
     return (
-      this.getChat() ?
+      this.props.currentChatId ? 
         <div id="chat" className="chat">
           <div className="members-header">
             {
-              this.getChat().members.map((id) => {
-                return <span key={ id }>{ this.getMember(id).username }</span>;
+              this.props.chat.members.map((m, i) => {
+                return <UserNameById key={i} id={m} />;
               })
             }
           </div>
           <div id="messages-view" className="messages">
             {
-              this.getMessages().map((message, index) => {
+              this.props.messages.map((message, index) => {
                 return <Message key={ message._id } message={ message } currentUser={ this.props.currentUser }/>;
               })
             }
@@ -72,13 +57,16 @@ export class ChatView extends Component {
 
 ChatView.propTypes = {
   currentChatId: PropTypes.string.isRequired,
+  chat: PropTypes.object,
   messages: PropTypes.array.isRequired,
 };
 
-export default createContainer(() => {
-  Meteor.subscribe('messages');
+export default ChatViewContainer = createContainer((props) => {
+  Meteor.subscribe('singleChat', props.currentChatId);
+  Meteor.subscribe('messages', props.currentChatId);
   return {
-    messages: Messages.find({}).fetch(),
+    messages: Messages.find().fetch(),
+    chat: Chats.find({ _id: props.currentChatId }).fetch()[0],
     currentUser: Meteor.user()
   };
 }, ChatView);
