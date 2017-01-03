@@ -30,11 +30,11 @@ Meteor.methods({
     // Check if this document already exists
     const chat = Chats.findOne({ members: { '$size': 2, '$all': [this.userId, otherUsersId] } });
     if(chat) {
-      // A chat with these users already exists
-      return;
+      // A chat with these users already exists, return the id so we can render it, client side
+      return chat._id;
     }
-    // This chat does not exist yet, insert it.
-    Chats.insert({
+    // This chat does not exist yet, insert it. And return the id so we can render it
+    return Chats.insert({
       createdAt: new Date(),
       owner: Meteor.userId(),
       members: [ Meteor.userId(), otherUsersId ],

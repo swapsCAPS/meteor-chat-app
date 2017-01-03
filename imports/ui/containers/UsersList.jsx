@@ -8,8 +8,11 @@ import './List.sass';
 
 export class UsersList extends Component {
 
-  newChat(id) {
-    Meteor.call('chats.new', id);
+  newChat(otherUsersId) {
+    Meteor.call('chats.new', otherUsersId, (err, data) => {
+      if(err) { console.error(err); }
+      this.props.setChatId(data);
+    });
   }
 
   render() {
@@ -32,6 +35,7 @@ export class UsersList extends Component {
 
 UsersList.propTypes = {
   users: PropTypes.array.isRequired,
+  setChatId: PropTypes.func.isRequired,
 };
 
 export default createContainer(() => {

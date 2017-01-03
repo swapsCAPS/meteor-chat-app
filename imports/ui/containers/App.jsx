@@ -29,7 +29,7 @@ export class App extends Component {
         <div className="container">
           <div className="side-bar">
             <ChatsList setChatId={ this.setCurrentChatId.bind(this) }/>
-            <UsersList />
+            <UsersList setChatId={ this.setCurrentChatId.bind(this) }/>
           </div>
           <ChatView currentChatId={ this.state.currentChatId }/>
         </div>
