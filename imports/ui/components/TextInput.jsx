@@ -2,10 +2,17 @@ import React, { Component, PropTypes } from 'react';
 
 import { Messages } from '../../api/messages.js';
 
+let timeoutId = -1;
+
 export default class TextInput extends Component {
 
   handleKeyUp(event) {
+    // Key has been pressed set typing to true
     Meteor.call('chats.setMemberTyping', this.props.currentChatId, true);
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      Meteor.call('chats.setMemberTyping', this.props.currentChatId, false);
+    }, 2000);
   }
 
   handleSubmit(event) {

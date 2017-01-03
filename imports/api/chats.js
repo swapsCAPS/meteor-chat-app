@@ -52,6 +52,7 @@ Meteor.methods({
 
     /*
      * This might lead to race conditions when multiple users are typing...
+     * Because we get the array out of the db and then save it again
      */
 
     // Get the chat and the index of this typing user
@@ -67,14 +68,5 @@ Meteor.methods({
       return oldIsTyping;
     });
     Chats.update({ _id: chatId }, { '$set': { isTyping: isTypingArr } });
-
-    // Wait for #### milliseconds and set user typing to false again
-    Meteor.setTimeout(() => {
-      const isTypingArr = chat.isTyping.map((oldIsTyping, arrayIndex) => {
-        if(arrayIndex === indexOfTyper) return false;
-        return oldIsTyping;
-      });
-      Chats.update({ _id: chatId }, { '$set': { isTyping: isTypingArr } });
-    }, 5000);
   },
 });
