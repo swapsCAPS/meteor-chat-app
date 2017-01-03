@@ -2,11 +2,17 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Chats } from './chats';
+
 export const Messages = new Mongo.Collection('messages');
 
 if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication(chatId) {
-    // TODO check if this user is in this chat
+    if(!this.userId || !chatId) return;
+    // TODO check security measures
+    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+      throw new Meteor.Error('not-authorized');
+    }
     return Messages.find( { chatId: chatId } );
   });
 }
@@ -14,12 +20,15 @@ if (Meteor.isServer) {
 Meteor.methods({
   'messages.insert'(text, chatId) {
     check(text, String);
+    check(chatId, String);
 
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-
-    // TODO check if the user is in this chat!
+    // Check if the user is in this chat
+    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+      throw new Meteor.Error('not-authorized');
+    }
 
     Messages.insert({
       text,

@@ -6,11 +6,16 @@ export const Chats = new Mongo.Collection('chats');
 
 if (Meteor.isServer) {
   Meteor.publish('chats', function chatsPublication() {
+    if(!this.userId) return;
     return Chats.find( { members: this.userId } );
   });
   Meteor.publish('singleChat', function singleChatPublication(chatId) {
-    // TODO check if this user is in this chat
-    return Chats.findOne( { '_id': chatId } );
+    if(!this.userId || !chatId) return;
+    // TODO check security measures
+    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+      throw new Meteor.Error('not-authorized');
+    }
+    return Chats.find({ chatId: chatId });
   });
 }
 
