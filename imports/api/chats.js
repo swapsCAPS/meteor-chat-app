@@ -21,12 +21,17 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   'chats.new'(otherUsersId) {
+    check(otherUsersId, String);
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
 
-    // TODO Check if chat already exists
-
+    // Find chat where both users are present TODO fix for more than 2 members
+    const chat = Chats.findOne({ members: Meteor.userId, members: otherUsersId });
+    if(chat) {
+      console.log('chat exists: %s', chat._id);
+      return;
+    }
     Chats.insert({
       createdAt: new Date(),
       owner: Meteor.userId(),
