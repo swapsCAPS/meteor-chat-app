@@ -4,26 +4,23 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import UserNameById from '../components/UserNameById'
+
 import { Chats } from '../../api/chats.js';
 
 import './List.sass';
 
 export class ChatsList extends Component {
-
-  getMember(id) {
-    return Meteor.users.findOne(id);
-  }
-
   handleClick(id) {
    this.props.setChatId(id);
   }
 
-  renderChatListItem(chat) {
+  renderListItem(chat) {
     return (
       <div onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
         {
           chat.members.map((m, i) => {
-            return <span key={ i }>{ this.getMember(m).username }</span>;
+            return <UserNameById key={ i } id={ m } />;
           })
         }
       </div>
@@ -35,8 +32,8 @@ export class ChatsList extends Component {
       <div className="chats-list">
         <h1 className="title">Chats:</h1>
         {
-          this.props.chats.map((c) => {
-            return this.renderChatListItem(c);
+          this.props.chats.map((c, i) => {
+            return this.renderListItem(c);
           })
         }
       </div>
