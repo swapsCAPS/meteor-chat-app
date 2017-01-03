@@ -35,13 +35,6 @@ export class ChatView extends Component {
     return (
       this.props.currentChatId ?
       <div id="chat" className="chat">
-        <div className="members-header">
-          {
-            this.props.chat.isTyping.map((isTyping, i) => {
-              return <UsernameById key={i} isTyping={isTyping} id={this.props.chat.members[i]} />;
-            })
-          }
-        </div>
         <div id="messages-view" className="messages">
           {
             this.props.messages.map((message, index) => {

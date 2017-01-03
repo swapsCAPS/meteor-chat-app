@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export class UsernameById extends Component {
-  componentWillUpdate() {
+  componentDidUpdate() {
     if(this.props.isTyping) {
-      ReactDOM.findDOMNode(this).classList.remove('is-typing');
-    } else {
       ReactDOM.findDOMNode(this).classList.add('is-typing');
+    } else {
+      ReactDOM.findDOMNode(this).classList.remove('is-typing');
     }
   }
 
