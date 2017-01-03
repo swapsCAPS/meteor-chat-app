@@ -4,7 +4,12 @@ import { Messages } from '../../api/messages.js';
 
 export default class TextInput extends Component {
 
-  handleSubmit(event){
+  handleKeyUp(event) {
+    console.log(Date.now());
+    Meteor.call('chats.setMemberTyping', this.props.currentChatId, Date.now());
+  }
+
+  handleSubmit(event) {
     event.preventDefault();
     const msg = this.refs.textInput.value.trim();
     if(msg.length === 0) return;
@@ -15,7 +20,7 @@ export default class TextInput extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <input className="text-input" ref="textInput" placeholder="Start typing : )" type="text"/>
+        <input onKeyUp={this.handleKeyUp.bind(this)} className="text-input" ref="textInput" placeholder="Start typing : )" type="text"/>
       </form>
     );
   }

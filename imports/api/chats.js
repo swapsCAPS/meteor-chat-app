@@ -38,12 +38,25 @@ Meteor.methods({
       createdAt: new Date(),
       owner: Meteor.userId(),
       members: [ Meteor.userId(), otherUsersId ],
+      lastActive: [ 0, 0 ]
     });
   },
-  'chats.setUserTyping'(chatId) {
+  'chats.setMemberTyping'(chatId, newTimestamp) {
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-    Chats.update(chatId, {});
+    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+      throw new Meteor.Error('not-authorized');
+    }
+    // This can propably lead to race conditions when multiple users are typing...
+    // TODO only update once every 2-5 seconds to give some time
+    // Man this is fugly TODO find better way of doing this...
+    const chat = Chats.findOne(chatId);
+    const indexOfTyper = chat.members.indexOf(this.userId);
+    const lastActiveArr = chat.lastActive.map((oldTimestamp, arrayIndex) => {
+      if(arrayIndex === indexOfTyper) return newTimestamp;
+      return oldTimestamp;
+    });
+    Chats.update({ _id: chatId }, { '$set': { lastActive: lastActiveArr } });
   },
 });
