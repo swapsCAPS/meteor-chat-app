@@ -26,23 +26,24 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    // Find chat where both users are present TODO fix for more than 2 members
-    const chat = Chats.findOne({ members: Meteor.userId, members: otherUsersId });
+    // NOTE this may be an expensive operation
+    // Check if this document already exists
+    const chat = Chats.findOne({ members: { '$size': 2, '$all': [this.userId, otherUsersId] } });
     if(chat) {
-      console.log('chat exists: %s', chat._id);
+      // A chat with these users already exists
       return;
     }
+    // This chat does not exist yet, insert it.
     Chats.insert({
       createdAt: new Date(),
       owner: Meteor.userId(),
       members: [ Meteor.userId(), otherUsersId ],
     });
   },
-  'chats.setUserTyping'(uid) {
+  'chats.setUserTyping'(chatId) {
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-    // TODO Set the member with uid to typing true
-    Chats.update();
+    Chats.update(chatId, {});
   },
 });
