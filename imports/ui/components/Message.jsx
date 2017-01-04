@@ -20,7 +20,7 @@ export default class Message extends Component {
   }
 
   render() {
-    const { message } = this.props;
+    const { message, currentUser } = this.props;
     return (
       <div className="msg-row" style={ this.alignment() }>
         <div className="msg-container">
@@ -29,14 +29,20 @@ export default class Message extends Component {
             <div className="text">
               <span>{ message.text }</span>
             </div>
-            <div className="time">
-              <span>{ moment( message.createdAt ).format( 'MMM Do HH:mm:ss' ) }</span>
+            <div className="msg-footer">
+              <div className="time">
+                <span>{ moment( message.createdAt ).format( 'MMM Do HH:mm:ss' ) }</span>
+              </div>
+              <div className="checkmark-container">
+                {
+                  this.belongsToCurrentUser() ?
+                    message.readBy.map((uid) => {
+                      if(uid === currentUser._id) return;
+                      return <span>✓</span>;
+                    }) : null
+                }
+              </div>
             </div>
-            {
-              message.readBy.map((uid) => {
-                return <span>{ uid }</span>;
-              })
-            }
           </div>
         </div>
       </div>
