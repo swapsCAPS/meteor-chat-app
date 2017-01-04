@@ -30,7 +30,7 @@ export class App extends Component {
       this.props.currentUser ?
         <div className="container">
           <div className="side-bar">
-            <ChatsList setChatId={ this.setCurrentChatId.bind(this) }/>
+            <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) }/>
             <UsersList setChatId={ this.setCurrentChatId.bind(this) }/>
           </div>
           <ChatView currentChatId={ this.state.currentChatId }/>

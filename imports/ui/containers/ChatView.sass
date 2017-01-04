@@ -3,6 +3,7 @@ $msg-background-color: #F5F5F5
 $text-dark: #263238
 $text-med: #90A4AE
 $text-light: #B0BEC5
+$checkmark-color: #81C784
 
 .chat
   width: 100%
@@ -10,13 +11,8 @@ $text-light: #B0BEC5
   display: flex
   flex-direction: column
 
-.members-header
-  background-color: green
-  height: 24px
-
 .is-typing
   color: #2196F3
-  font-weight: bold
 
 .messages
   padding-top: 8px
@@ -65,11 +61,23 @@ $text-light: #B0BEC5
           max-width: 400px
           word-wrap: break-word
 
-      .time
+      .msg-footer
+        margin-left: 20px
         display: flex
-        flex-direction: column
-        justify-content: flex-end
-        span
-          font-size: 10px
-          color: $text-light
-          margin-left: 20px
+        .time
+          display: flex
+          flex-direction: column
+          justify-content: flex-end
+          span
+            font-size: 10px
+            color: $text-light
+
+        .checkmark-container
+          display: flex
+          flex-direction: column
+          justify-content: flex-end
+          margin-left: 2px
+          span
+            font-size: 14px
+            font-weight: bold
+            color: $checkmark-color
