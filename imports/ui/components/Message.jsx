@@ -4,10 +4,10 @@ import moment from 'moment';
 export default class Message extends Component {
   componentDidMount() {
     // This user has 'seen' this message TODO fix so this runs when component is actually visible
-    const { message, readBy, currentUser } = this.props;
-    if (readBy.indexOf(currentUser) === -1) {
+    const { message, currentUser } = this.props;
+    if (message.readBy.indexOf(currentUser) === -1) {
       // This user is not in the readBy list, add them to it
-      Meteor.call('messages.setRead', message.id);
+      Meteor.call('messages.setRead', message._id);
     }
   }
 
