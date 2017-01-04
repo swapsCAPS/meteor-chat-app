@@ -3,8 +3,12 @@ import moment from 'moment';
 
 export default class Message extends Component {
   componentDidMount() {
-    // This user has 'seen' this message
-    // The message object in the db will get an array of userids who have read it
+    // This user has 'seen' this message TODO fix so this runs when component is actually visible
+    const { message, readBy, currentUser } = this.props;
+    if (readBy.indexOf(currentUser) === -1) {
+      // This user is not in the readBy list, add them to it
+      Meteor.call('messages.setRead', message.id);
+    }
   }
 
   belongsToCurrentUser() {
@@ -16,17 +20,23 @@ export default class Message extends Component {
   }
 
   render() {
+    const { message } = this.props;
     return (
-      <div className="msg-row" style={this.alignment()}>
+      <div className="msg-row" style={ this.alignment() }>
         <div className="msg-container">
-          <span className="msg-username">{ this.props.message.username }</span>
+          <span className="msg-username">{ message.username }</span>
           <div className="msg-content">
             <div className="text">
-              <span>{ this.props.message.text }</span>
+              <span>{ message.text }</span>
             </div>
             <div className="time">
-              <span>{ moment(this.props.message.createdAt).format('MMM Do HH:mm:ss') }</span>
+              <span>{ moment( message.createdAt ).format( 'MMM Do HH:mm:ss' ) }</span>
             </div>
+            {
+              message.readBy.map((uid) => {
+                return <span>{ uid }</span>;
+              })
+            }
           </div>
         </div>
       </div>
