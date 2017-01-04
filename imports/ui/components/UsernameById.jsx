@@ -12,7 +12,6 @@ export class UsernameById extends Component {
   }
 
   render() {
-    console.log('rendering...');
     const { user } = this.props;
     const username = user ? user.username : 'undefined';
     return (

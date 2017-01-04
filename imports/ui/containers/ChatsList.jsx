@@ -16,8 +16,10 @@ export class ChatsList extends Component {
   }
 
   renderListItem(chat) {
+    const isCurrentChat = chat._id === this.props.currentChatId;
+    const style = isCurrentChat ? { fontWeight: 'bold' } : null;
     return (
-      <div onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
+      <div style={style} onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
         {
           chat.isTyping.map((isTyping, i) => {
             if(chat.members[i] === Meteor.userId()) return;
@@ -31,7 +33,7 @@ export class ChatsList extends Component {
   render() {
     return (
       <div className="list">
-        <h2 className="title">Chats:</h2>
+        <h2 className="title">Chats</h2>
         {
           this.props.chats.map((c, i) => {
             return this.renderListItem(c);
@@ -45,6 +47,7 @@ export class ChatsList extends Component {
 ChatsList.propTypes = {
   setChatId: PropTypes.func,
   chats: PropTypes.array.isRequired,
+  currentChatId: PropTypes.string
 };
 
 export default createContainer(() => {
