@@ -51,6 +51,6 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    Messages.update({ _id: messageId }, { '$addToSet': { readBy: Meteor.userId() } });
+    Messages.update({ _id: messageId }, { '$addToSet': { readBy: this.userId } });
   },
 });
