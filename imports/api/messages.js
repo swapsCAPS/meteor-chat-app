@@ -36,6 +36,21 @@ Meteor.methods({
       owner: Meteor.userId(),
       chatId: chatId,
       username: Meteor.users.findOne(this.userId).username,
+      readBy: [],
     });
+  },
+  'messages.setRead'(messageId) {
+    check(messageId, String);
+
+    if(!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    // Check if the user is in this chat
+    const chatId = Messages.findOne(messageId).chatId;
+    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Messages.update({ _id: messageId }, { '$addToSet': { readBy: this.userId } });
   },
 });
