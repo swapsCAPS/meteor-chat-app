@@ -11,9 +11,9 @@ MVP:
 
 ### Screenshots
 Notice the 'is typing...' notification
-<img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot-1.png" alt="screenshot" width="650px"/>
+<img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot1.png" alt="screenshot" width="650px"/>
 And the green checkmarks for message received
-<img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot-1.png" alt="screenshot" width="650px"/>
+<img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot2.png" alt="screenshot" width="650px"/>
 
 ### Installation
 - `curl https://install.meteor.com/ | sh`
