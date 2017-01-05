@@ -8,7 +8,9 @@ export const Messages = new Mongo.Collection('messages');
 
 if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication(chatId) {
+    // Publish all the messages in this chat
     if(!this.userId || !chatId) return;
+    // Check if the user is a member of this chat
     if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
       throw new Meteor.Error('not-authorized');
     }
