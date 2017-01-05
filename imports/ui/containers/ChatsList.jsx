@@ -17,9 +17,9 @@ export class ChatsList extends Component {
 
   renderListItem(chat) {
     const isCurrentChat = chat._id === this.props.currentChatId;
-    const style = isCurrentChat ? { fontWeight: 'bold' } : null;
+    const isSelected = isCurrentChat ? { backgroundColor: '#CFD8DC' } : null;
     return (
-      <div style={style} onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
+      <div className="list-item" style={isSelected} onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
         {
           chat.isTyping.map((isTyping, i) => {
             if(chat.members[i] === Meteor.userId()) return;

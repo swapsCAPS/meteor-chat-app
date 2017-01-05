@@ -34,6 +34,11 @@ export class App extends Tracker.Component {
     return (
       <div className="container">
         <div className="side-bar">
+          <div className="logged-in-as">
+            <div className="avatar"></div>
+            <span className="text">Logged in as:</span>
+            <span className="username">{ this.props.currentUser.username }</span>
+          </div>
           <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) }/>
           <UsersList setChatId={ this.setCurrentChatId.bind(this) }/>
         </div>
