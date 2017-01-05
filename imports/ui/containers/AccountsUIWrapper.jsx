@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Template } from 'meteor/templating';
-import { Blaze } from 'meteor/blaze';
+import { Accounts, STATES } from 'meteor/std:accounts-ui';
+
+import './AccountsUIWrapper.sass';
+
+const centerVertical = {
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+};
+const centerHorizontal = {
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%'
+};
 
 export default class AccountsUIWrapper extends Component {
-  componentDidMount(){
-    this.view = Blaze.render(Template.loginButtons, ReactDOM.findDOMNode(this.refs.container));
-  }
-
-  componentWillUnmount() {
-    Blaze.remove(this.view);
-  }
 
   render() {
-    return <span ref="container" />;
+    return ( 
+      <div style={ centerVertical }>
+        <div className="login-form-wrapper" style={ centerHorizontal }>
+          <Accounts.ui.LoginForm formState={STATES.SIGN_IN} />
+        </div>
+      </div>
+    );
   }
 }
