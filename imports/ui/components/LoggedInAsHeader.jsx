@@ -17,18 +17,18 @@ export default class LoggedInAsHeader extends Component {
 
   render() {
     return (
-      <div onClick={ this.toggleLoginButtons.bind(this) } className="logged-in-as">
+      <div className="logged-in-as">
         {
           this.state.showButtons ?
-            <div>
-              <div onClick={ this.logOut.bind(this) }>LOGOUT</div>
-              <div onClick={ this.toggleLoginButtons.bind(this) }>CANCEL</div>
+            <div className="button-container">
+              <div className="button" onClick={ this.logOut.bind(this) }>LOGOUT</div>
+              <div className="button" onClick={ this.toggleLoginButtons.bind(this) }>CANCEL</div>
             </div>
             :
             <div>
               <div className="avatar"></div>
               <span className="text">Logged in as:</span>
-              <span className="username">{ this.props.username }</span>
+              <span className="username" onClick={ this.toggleLoginButtons.bind(this) }>{ this.props.username }</span>
             </div> 
         }
       </div>
