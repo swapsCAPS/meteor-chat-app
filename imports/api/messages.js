@@ -9,7 +9,6 @@ export const Messages = new Mongo.Collection('messages');
 if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication(chatId) {
     if(!this.userId || !chatId) return;
-    // TODO check security measures
     if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
       throw new Meteor.Error('not-authorized');
     }
