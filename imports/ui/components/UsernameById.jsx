@@ -15,7 +15,7 @@ export class UsernameById extends Component {
     const { user } = this.props;
     const username = user ? user.username : 'undefined';
     return (
-      <span className="username">{ username }</span>
+      <span className="username ellipsis">{ username }</span>
     );
   }
 }

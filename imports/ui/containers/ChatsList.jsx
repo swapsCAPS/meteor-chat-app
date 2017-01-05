@@ -12,10 +12,20 @@ import './List.sass';
 
 export class ChatsList extends Component {
   handleClick(id) {
-   this.props.setChatId(id);
+    this.props.setChatId(id);
+  }
+
+  renderFooter(isTyping, text) {
+    // Render the footer, displays 'is typing...' if a user is typing, otherwise last message from chat
+    return (
+      <span className="footer ellipsis">
+        { isTyping ? 'is typing...' : text }
+      </span>
+    );
   }
 
   renderListItem(chat) {
+    // Render a list item, if it is the current chat, set highlight it
     const isCurrentChat = chat._id === this.props.currentChatId;
     const isSelected = isCurrentChat ? { backgroundColor: '#CFD8DC' } : null;
     return (
@@ -23,7 +33,12 @@ export class ChatsList extends Component {
         {
           chat.isTyping.map((isTyping, i) => {
             if(chat.members[i] === Meteor.userId()) return;
-            return <UsernameById key={i} isTyping={isTyping} id={chat.members[i]} />;
+            return (
+              <div className="content">
+                <UsernameById key={i} isTyping={isTyping} id={chat.members[i]} />
+                { this.renderFooter(isTyping, chat.lastMsgText) }
+              </div>
+            );
           })
         }
       </div>
@@ -31,14 +46,11 @@ export class ChatsList extends Component {
   }
 
   render() {
+    // Render all chats
     return (
       <div className="list">
         <h2 className="title">Chats</h2>
-        {
-          this.props.chats.map((c, i) => {
-            return this.renderListItem(c);
-          })
-        }
+        { this.props.chats.map((c, i) => this.renderListItem(c) ) }
       </div>
     );
   }

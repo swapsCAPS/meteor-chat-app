@@ -8,9 +8,9 @@ export const Messages = new Mongo.Collection('messages');
 
 if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication(chatId) {
-    // Publish all the messages in this chat
+    // Publish all the messages with this chat id
     if(!this.userId || !chatId) return;
-    // Check if the user is a member of this chat
+    // Make sure the user is a member of this chat
     if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
       throw new Meteor.Error('not-authorized');
     }
@@ -31,6 +31,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
+    // Insert a message
     Messages.insert({
       text,
       createdAt: new Date(),
@@ -39,6 +40,8 @@ Meteor.methods({
       username: Meteor.users.findOne(this.userId).username,
       readBy: [],
     });
+    // Also set last message in Chat
+    Chats.update(chatId, { $set: { lastMsgText: text } });
   },
   'messages.setRead'(messageId) {
     check(messageId, String);
