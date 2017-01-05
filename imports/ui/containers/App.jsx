@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import AccountsUIWrapper from '../containers/AccountsUIWrapper';
+import LoggedInAsHeader from '../components/LoggedInAsHeader';
 import ChatsList from '../containers/ChatsList';
 import UsersList from '../containers/UsersList';
 import ChatView from '../containers/ChatView';
@@ -34,15 +35,11 @@ export class App extends Tracker.Component {
     return (
       <div className="container">
         <div className="side-bar">
-          <div className="logged-in-as">
-            <div className="avatar"></div>
-            <span className="text">Logged in as:</span>
-            <span className="username">{ this.props.currentUser.username }</span>
-          </div>
-          <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) }/>
-          <UsersList setChatId={ this.setCurrentChatId.bind(this) }/>
+          <LoggedInAsHeader username={ this.props.currentUser.username } />
+          <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) } />
+          <UsersList setChatId={ this.setCurrentChatId.bind(this) } />
         </div>
-        <ChatView currentChatId={ this.state.currentChatId }/>
+        <ChatView currentChatId={ this.state.currentChatId } />
       </div>
     );
   }
