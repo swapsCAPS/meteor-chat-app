@@ -10,9 +10,9 @@ MVP:
 - React front-end
 
 ### Screenshots
-Notice the 'is typing...' notification
+Notice the 'is typing...' notification  
 <img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot1.png" alt="screenshot" width="650px"/>
-And the green checkmarks for message received
+And the green checkmarks for message received  
 <img src="https://github.com/stofstik/meteor-chat-app/blob/master/screenshot2.png" alt="screenshot" width="650px"/>
 
 ### Installation
