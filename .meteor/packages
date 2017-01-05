@@ -22,3 +22,5 @@ accounts-ui
 accounts-password
 fourseven:scss
 seba:minifiers-autoprefixer
+std:accounts-ui
+std:accounts-basic

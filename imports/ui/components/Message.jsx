@@ -36,9 +36,9 @@ export default class Message extends Component {
               <div className="checkmark-container">
                 {
                   this.belongsToCurrentUser() ?
-                    message.readBy.map((uid) => {
+                    message.readBy.map((uid, index) => {
                       if(uid === currentUser._id) return;
-                      return <span>✓</span>;
+                      return <span key={index}>✓</span>;
                     }) : null
                 }
               </div>

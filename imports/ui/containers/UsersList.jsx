@@ -21,6 +21,7 @@ export class UsersList extends Component {
         <h2 className="title">New chat</h2>
         {
           this.props.users.map((u) => {
+            if(u._id === Meteor.userId()) return; // Do not show ourselves in list
             return (
               <div onClick={ this.newChat.bind(this, u._id) } key={ u._id }>
                 <span className="username">{ u.username }</span>

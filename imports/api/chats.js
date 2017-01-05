@@ -42,6 +42,8 @@ Meteor.methods({
     });
   },
   'chats.setMemberTyping'(chatId, newIsTyping) {
+    check(chatId, String);
+    check(newIsTyping, Boolean);
     // First check authorization
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
