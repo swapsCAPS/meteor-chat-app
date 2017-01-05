@@ -24,13 +24,13 @@ export class App extends Tracker.Component {
 
   componentDidUpdate(prevProps){
     if(prevProps.currentUser === this.props.currentUser) return;
-    console.log('componentDidUpdate');
+    // Only set state if the currentUser object has changed to prevent endless lifecycle loop
     this.setState( { currentChatId: this.props.currentUser.mostRecentChat } );
   }
 
   setCurrentChatId(id) {
     this.setState( { currentChatId: id } );
-    // Set the most recent chat so we can render it on app reload
+    // Set the most recent chat on the user object so we can render it for the user on app reload
     Meteor.call('users.setMostRecentChat', id);
   }
 
@@ -45,7 +45,11 @@ export class App extends Tracker.Component {
           <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) } />
           <UsersList setChatId={ this.setCurrentChatId.bind(this) } />
         </div>
-        <ChatView currentChatId={ this.state.currentChatId } />
+        {
+          this.state.currentChatId ?
+            <ChatView currentChatId={ this.state.currentChatId } /> :
+            <h1>LOADING...</h1>
+        }
       </div>
     );
   }
