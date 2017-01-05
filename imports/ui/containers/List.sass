@@ -1,3 +1,5 @@
+$text-med: #90A4AE
+
 .list
   margin-bottom: 16px
   .title
@@ -13,16 +15,29 @@
     transition: background-color .55s ease-in-out
     -moz-transition: background-color .55s ease-in-out
     -webkit-transition: background-color .55s ease-in-out
-    .username
-      overflow: hidden
-      text-overflow: ellipsis
-      white-space: nowrap
-      margin-bottom: 4px
-      transition: color .25s ease-in-out
-      -moz-transition: color .25s ease-in-out
-      -webkit-transition: color .25s ease-in-out
+    .content
+      display: flex
+      flex-direction: column
+      .is-typing
+        color: #03A9F4
+
+      .username
+        font-size: 18px
+        transition: color .25s ease-in-out
+        -moz-transition: color .25s ease-in-out
+        -webkit-transition: color .25s ease-in-out
+      .footer
+        font-size: 12px
+        width: 180px
+        color: $text-med
+      
   .list-item:hover
     background-color: #B0BEC5
     transition: background-color .25s ease-in-out
     -moz-transition: background-color .25s ease-in-out
     -webkit-transition: background-color .25s ease-in-out
+
+.ellipsis
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap

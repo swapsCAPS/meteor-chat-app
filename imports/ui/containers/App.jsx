@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import AccountsUIWrapper from '../containers/AccountsUIWrapper';
+import LoggedInAsHeader from '../components/LoggedInAsHeader';
 import ChatsList from '../containers/ChatsList';
 import UsersList from '../containers/UsersList';
 import ChatView from '../containers/ChatView';
@@ -21,10 +22,16 @@ export class App extends Tracker.Component {
     console.log('w00t we have react');
   }
 
+  componentDidUpdate(prevProps){
+    if(prevProps.currentUser === this.props.currentUser) return;
+    // Only set state if the currentUser object has changed to prevent endless lifecycle loop
+    this.setState( { currentChatId: this.props.currentUser.mostRecentChat } );
+  }
+
   setCurrentChatId(id) {
     this.setState( { currentChatId: id } );
-    // Set latest chat so we can render it on app start
-    // TODO TODO
+    // Set the most recent chat on the user object so we can render it for the user on app reload
+    Meteor.call('users.setMostRecentChat', id);
   }
 
   render() {
@@ -34,15 +41,15 @@ export class App extends Tracker.Component {
     return (
       <div className="container">
         <div className="side-bar">
-          <div className="logged-in-as">
-            <div className="avatar"></div>
-            <span className="text">Logged in as:</span>
-            <span className="username">{ this.props.currentUser.username }</span>
-          </div>
-          <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) }/>
-          <UsersList setChatId={ this.setCurrentChatId.bind(this) }/>
+          <LoggedInAsHeader username={ this.props.currentUser.username } />
+          <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) } />
+          <UsersList setChatId={ this.setCurrentChatId.bind(this) } />
         </div>
-        <ChatView currentChatId={ this.state.currentChatId }/>
+        {
+          this.state.currentChatId ?
+            <ChatView currentChatId={ this.state.currentChatId } /> :
+            <h1>LOADING...</h1>
+        }
       </div>
     );
   }

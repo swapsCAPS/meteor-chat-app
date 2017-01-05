@@ -5,12 +5,22 @@
 
 .side-bar
   background: #ECEFF1
-  max-width: 200px
+  min-width: 200px
   padding: 12px 0
+  overflow-y: auto
 
   .logged-in-as
     height: 32px
     margin: 0 0 24px 12px
+
+    .button-container
+      display: flex
+      padding-top: 16px
+      .button
+        margin: 0 8px
+        cursor: pointer
+      .button:hover
+        text-decoration: underline
 
     .text
       font-size: 12px
@@ -22,3 +32,6 @@
       text-overflow: ellipsis
       white-space: nowrap
       text-transform: uppercase
+      cursor: pointer
+    .username:hover
+      text-decoration: underline

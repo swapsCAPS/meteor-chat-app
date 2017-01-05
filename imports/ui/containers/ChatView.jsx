@@ -14,14 +14,8 @@ import NotFoundView from '../components/NotFoundView';
 import './ChatView.sass';
 
 export class ChatView extends Component {
-  componentDidMount() {
-    // TODO fix this bia : /
-    setTimeout(() => {
-      this.scrollToBottom();
-    }, 100);
-  }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(nextProps, nextState) {
     // Only scroll down if the amount of messages changes
     if(this.props.messages.length !== nextProps.messages.length) {
       this.scrollToBottom();
@@ -41,7 +35,7 @@ export class ChatView extends Component {
         <div id="messages-view" className="messages">
           {
             messages.map((message, index) => {
-              return <Message key={ message._id } message={ message } currentUser={ currentUser }/>;
+              return <Message name={ message._id } key={ message._id } message={ message } currentUser={ currentUser }/>;
             })
           }
         </div>
@@ -61,7 +55,6 @@ ChatView.propTypes = {
 };
 
 export default ChatViewContainer = createContainer((props) => {
-  Meteor.subscribe('singleChat', props.currentChatId);
   Meteor.subscribe('messages', props.currentChatId);
   return {
     messages: Messages.find().fetch(),
