@@ -9,6 +9,7 @@ import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 import Splash from '../components/Splash';
 import UsernameById from '../components/UsernameById';
+import NotFoundView from '../components/NotFoundView';
 
 import './ChatView.sass';
 
@@ -32,26 +33,28 @@ export class ChatView extends Component {
   }
 
   render() {
+    const { currentChatId, messages, currentUser } = this.props;
+    if(!currentUser) return <NotFoundView />;
+    if(!currentChatId && currentUser) return <Splash username={ currentUser.username }/>;
     return (
-      this.props.currentChatId ?
       <div id="chat" className="chat">
         <div id="messages-view" className="messages">
           {
-            this.props.messages.map((message, index) => {
-              return <Message key={ message._id } message={ message } currentUser={ this.props.currentUser }/>;
+            messages.map((message, index) => {
+              return <Message key={ message._id } message={ message } currentUser={ currentUser }/>;
             })
           }
         </div>
         <div className="input-footer">
-          <TextInput currentChatId={ this.props.currentChatId }/>
+          <TextInput currentChatId={ currentChatId }/>
         </div>
       </div>
-      : <Splash username={ this.props.currentUser.username }/>
     );
   }
 }
 
 ChatView.propTypes = {
+  currentUser: PropTypes.object.isRequired,
   currentChatId: PropTypes.string.isRequired,
   chat: PropTypes.object,
   messages: PropTypes.array.isRequired,
