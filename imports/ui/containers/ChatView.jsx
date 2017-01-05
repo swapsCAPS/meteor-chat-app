@@ -55,7 +55,6 @@ ChatView.propTypes = {
 };
 
 export default ChatViewContainer = createContainer((props) => {
-  Meteor.subscribe('singleChat', props.currentChatId);
   Meteor.subscribe('messages', props.currentChatId);
   return {
     messages: Messages.find().fetch(),

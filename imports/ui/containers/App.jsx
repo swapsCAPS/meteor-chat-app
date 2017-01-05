@@ -22,16 +22,15 @@ export class App extends Tracker.Component {
     console.log('w00t we have react');
   }
 
-  componentDidUpdate(){
-    const { currentUser } = this.props;
-    if(this.state.currentChatId !== currentUser.mostRecentChat) {
-      this.setCurrentChatId(currentUser.mostRecentChat);
-    }
+  componentDidUpdate(prevProps){
+    if(prevProps.currentUser === this.props.currentUser) return;
+    console.log('componentDidUpdate');
+    this.setState( { currentChatId: this.props.currentUser.mostRecentChat } );
   }
 
   setCurrentChatId(id) {
     this.setState( { currentChatId: id } );
-    // Set the most recent chat so we can render it on app start
+    // Set the most recent chat so we can render it on app reload
     Meteor.call('users.setMostRecentChat', id);
   }
 
