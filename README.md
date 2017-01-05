@@ -4,11 +4,11 @@
 An assignment for a job opening.  
 
 ### MVP:
-✓ Simpe UI to send/receive messages
-✓ Two or more people can use the app at the same time
-✓ Visible if other user is typing
-✓ Visible if message is read
-✓ React front-end
+- Simpe UI to send/receive messages ✓
+- Two or more people can use the app at the same time ✓
+- Visible if other user is typing ✓
+- Visible if message is read ✓
+- React front-end ✓
 
 ### Screenshots
 Notice the *is typing...* notification  
