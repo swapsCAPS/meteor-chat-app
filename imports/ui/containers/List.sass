@@ -1,21 +1,28 @@
-$text-med: #90A4AE
-
 .list
   margin-bottom: 16px
   .title
+    margin: 0 0 4px 8px
     margin-bottom: 4px
-  .username
-    display: block
-    overflow: hidden
-    text-overflow: ellipsis
-    white-space: nowrap
+  .list-item
+    display: flex
+    flex-direction: column
     cursor: pointer
-    margin-bottom: 4px
-    transition: color .55s ease-in-out
-    -moz-transition: color .55s ease-in-out
-    -webkit-transition: color .55s ease-in-out
-  .username:hover
-    color: $text-med
-    transition: color .25s ease-in-out
-    -moz-transition: color .25s ease-in-out
-    -webkit-transition: color .25s ease-in-out
+    justify-content: center
+    height: 42px
+    padding: 0 8px
+    transition: background-color .55s ease-in-out
+    -moz-transition: background-color .55s ease-in-out
+    -webkit-transition: background-color .55s ease-in-out
+    .username
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+      margin-bottom: 4px
+      transition: color .25s ease-in-out
+      -moz-transition: color .25s ease-in-out
+      -webkit-transition: color .25s ease-in-out
+  .list-item:hover
+    background-color: #B0BEC5
+    transition: background-color .25s ease-in-out
+    -moz-transition: background-color .25s ease-in-out
+    -webkit-transition: background-color .25s ease-in-out

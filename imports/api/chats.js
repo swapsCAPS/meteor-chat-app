@@ -25,6 +25,9 @@ Meteor.methods({
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
+    if(!this.userId === otherUsersId) {
+      throw new Meteor.Error('currentUser id is equal to otherUsersId');
+    }
 
     // NOTE this may be an expensive operation
     // Check if this document already exists
