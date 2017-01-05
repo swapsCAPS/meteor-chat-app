@@ -45,11 +45,7 @@ export class App extends Tracker.Component {
           <ChatsList currentChatId={ this.state.currentChatId } setChatId={ this.setCurrentChatId.bind(this) } />
           <UsersList setChatId={ this.setCurrentChatId.bind(this) } />
         </div>
-        {
-          this.state.currentChatId ?
-            <ChatView currentChatId={ this.state.currentChatId } /> :
-            <h1>LOADING...</h1>
-        }
+        <ChatView currentChatId={ this.state.currentChatId } /> :
       </div>
     );
   }

@@ -49,7 +49,7 @@ export class ChatView extends Component {
 
 ChatView.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  currentChatId: PropTypes.string.isRequired,
+  currentChatId: PropTypes.string,
   chat: PropTypes.object,
   messages: PropTypes.array.isRequired,
 };
