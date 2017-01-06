@@ -7,9 +7,9 @@ let timeoutId = -1;
 export default class TextInput extends Component {
 
   handleKeyUp(event) {
-    // Key has been pressed set typing to true
+    // Key has been pressed set typing to true, wait for a while and set typing to false
     Meteor.call('chats.setMemberTyping', this.props.currentChatId, true);
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId); // Clear the previous timeout, so we only use the last keystroke
     timeoutId = setTimeout(() => {
       Meteor.call('chats.setMemberTyping', this.props.currentChatId, false);
     }, 2000);
