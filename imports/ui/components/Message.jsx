@@ -1,3 +1,7 @@
+/*
+ * A message component aligned left or right based on message owner
+ * With a checkmark for message read
+ */
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 
@@ -19,8 +23,15 @@ export default class Message extends Component {
     return this.belongsToCurrentUser() ? { justifyContent: 'flex-end' } : null;
   }
 
+  renderCheckmark(message) {
+    return message.readBy.map((uid, index) => {
+      if(uid === this.props.currentUser._id) return;
+      return <span key={index}>✓</span>;
+    });
+  }
+
   render() {
-    const { message, currentUser } = this.props;
+    const { message } = this.props;
     return (
       <div className="msg-row" style={ this.alignment() }>
         <div className="msg-container">
@@ -34,13 +45,7 @@ export default class Message extends Component {
                 <span>{ moment( message.createdAt ).format( 'MMM Do HH:mm:ss' ) }</span>
               </div>
               <div className="checkmark-container">
-                {
-                  this.belongsToCurrentUser() ?
-                    message.readBy.map((uid, index) => {
-                      if(uid === currentUser._id) return;
-                      return <span key={index}>✓</span>;
-                    }) : null
-                }
+                { this.belongsToCurrentUser() ? this.renderCheckmark(message) : null }
               </div>
             </div>
           </div>

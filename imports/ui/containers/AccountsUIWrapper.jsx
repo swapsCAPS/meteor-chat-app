@@ -1,5 +1,10 @@
+/*
+ * A wrapper to easily center the 'accounts-ui' LoginForm
+ */
 import React, { Component } from 'react';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
+
+import '../../startup/accounts-config';
 
 import './AccountsUIWrapper.sass';
 

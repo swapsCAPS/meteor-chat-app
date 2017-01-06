@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Tracker from 'tracker-component';
 import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 
@@ -8,12 +7,10 @@ import LoggedInAsHeader from '../components/LoggedInAsHeader';
 import ChatsList from '../containers/ChatsList';
 import UsersList from '../containers/UsersList';
 import ChatView from '../containers/ChatView';
-import TextInput from '../components/TextInput';
-import TypingUsers from '../components/TypingUsers';
 
 import './App.sass';
 
-export class App extends Tracker.Component {
+export class App extends Component {
   state = {
     currentChatId: ''
   }
@@ -23,9 +20,11 @@ export class App extends Tracker.Component {
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.currentUser === this.props.currentUser) return;
+    const { currentUser } = this.props;
+    if(!currentUser) return;
+    if(prevProps.currentUser === currentUser) return;
     // Only set state if the currentUser object has changed to prevent endless lifecycle loop
-    this.setState( { currentChatId: this.props.currentUser.mostRecentChat } );
+    this.setState( { currentChatId: currentUser.mostRecentChat } );
   }
 
   setCurrentChatId(id) {

@@ -1,3 +1,6 @@
+/*
+ * Simple header which shows current user, click to reveal logout button
+ */
 import React, { Component, PropTypes } from 'react';
 
 export default class LoggedInAsHeader extends Component {

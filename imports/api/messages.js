@@ -10,8 +10,8 @@ if (Meteor.isServer) {
   Meteor.publish('messages', function messagesPublication(chatId) {
     // Publish all the messages with this chat id
     if(!this.userId || !chatId) return;
-    // Make sure the user is a member of this chat
-    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+    // Check if the user is in this chat
+    if(!Chats.findOne( { _id: chatId, 'members._id': this.userId } )) {
       throw new Meteor.Error('not-authorized');
     }
     return Messages.find( { chatId: chatId } );
@@ -22,12 +22,11 @@ Meteor.methods({
   'messages.insert'(text, chatId) {
     check(text, String);
     check(chatId, String);
-
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
     // Check if the user is in this chat
-    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+    if(!Chats.findOne( { _id: chatId, 'members._id': this.userId } )) {
       throw new Meteor.Error('not-authorized');
     }
 
@@ -45,16 +44,16 @@ Meteor.methods({
   },
   'messages.setRead'(messageId) {
     check(messageId, String);
-
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-    // Check if the user is in this chat
+    // Check if the user is in this message's chat
     const chatId = Messages.findOne(messageId).chatId;
-    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+    if(!Chats.findOne( { _id: chatId, 'members._id': this.userId } )) {
       throw new Meteor.Error('not-authorized');
     }
 
+    // Add user to the readBy array if it is not in it
     Messages.update({ _id: messageId }, { '$addToSet': { readBy: this.userId } });
   },
 });

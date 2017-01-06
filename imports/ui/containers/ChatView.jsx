@@ -1,3 +1,6 @@
+/*
+ * The chat view to hold all messages belonging to this chat
+ */
 import React, { Component, PropTypes } from 'react';
 import Scroll from 'react-scroll';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -8,8 +11,7 @@ import { Chats } from '../../api/chats.js';
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 import Splash from '../components/Splash';
-import UsernameById from '../components/UsernameById';
-import NotFoundView from '../components/NotFoundView';
+import NotFound from '../components/NotFound';
 
 import './ChatView.sass';
 
@@ -18,18 +20,14 @@ export class ChatView extends Component {
   componentDidUpdate(nextProps, nextState) {
     // Only scroll down if the amount of messages changes
     if(this.props.messages.length !== nextProps.messages.length) {
-      this.scrollToBottom();
+      Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
     }
-  }
-
-  scrollToBottom() {
-    Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
   }
 
   render() {
     const { currentChatId, messages, currentUser } = this.props;
-    if(!currentUser) return <NotFoundView />;
-    if(!currentChatId && currentUser) return <Splash username={ currentUser.username }/>;
+    if(!currentUser) return <NotFound />;
+    if(!currentChatId) return <Splash username={ currentUser.username }/>;
     return (
       <div id="chat" className="chat">
         <div id="messages-view" className="messages">
@@ -48,7 +46,7 @@ export class ChatView extends Component {
 }
 
 ChatView.propTypes = {
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   currentChatId: PropTypes.string,
   chat: PropTypes.object,
   messages: PropTypes.array.isRequired,

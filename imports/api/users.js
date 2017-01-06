@@ -16,10 +16,11 @@ Meteor.methods({
     if(!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
-    // User member of chat?
-    if(Chats.findOne(chatId).members.indexOf(this.userId) === -1) {
+    // User a member of this chat?
+    if(!Chats.findOne( { _id: chatId, 'members._id': this.userId } )){
       throw new Meteor.Error('not-authorized');
     }
+
     Meteor.users.update(this.userId, { $set: { mostRecentChat: chatId } });
   }, 
 });

@@ -1,6 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+/*
+ * 404
+ */
+import React, { Component } from 'react';
 
-export default class NotFoundView extends Component {
+export default class NotFound extends Component {
   render() {
     return (
       <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
