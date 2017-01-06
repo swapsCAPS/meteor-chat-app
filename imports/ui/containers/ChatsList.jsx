@@ -5,7 +5,6 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import UsernameById from '../components/UsernameById';
-
 import { Chats } from '../../api/chats.js';
 
 import './List.sass';
@@ -29,14 +28,14 @@ export class ChatsList extends Component {
     const isCurrentChat = chat._id === this.props.currentChatId;
     const isSelected = isCurrentChat ? { backgroundColor: '#CFD8DC' } : null;
     return (
-      <div className="list-item" style={isSelected} onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
+      <div className="list-item" style={ isSelected } onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
         {
-          chat.isTyping.map((isTyping, i) => {
-            if(chat.members[i] === Meteor.userId()) return;
+          chat.members.map((member, i) => {
+            if(member._id === Meteor.userId()) return;
             return (
-              <div className="content">
-                <UsernameById key={i} isTyping={isTyping} id={chat.members[i]} />
-                { this.renderFooter(isTyping, chat.lastMsgText) }
+              <div key={ i } className="content">
+                <UsernameById key={ i } isTyping={ member.isTyping } id={ member._id } />
+                { this.renderFooter(member.isTyping, chat.lastMsgText) }
               </div>
             );
           })
@@ -64,7 +63,6 @@ ChatsList.propTypes = {
 
 export default createContainer(() => {
   Meteor.subscribe('chats');
-  Meteor.subscribe('users');
   return {
     chats: Chats.find({}).fetch(),
   };
