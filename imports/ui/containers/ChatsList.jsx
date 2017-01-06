@@ -21,20 +21,13 @@ export class ChatsList extends Component {
           return (
             <div key={ i } className="content">
               <UsernameById key={ i } isTyping={ member.isTyping } id={ member._id } />
-              { this.renderFooter(member.isTyping, chat.lastMsgText) }
+              <span className="footer ellipsis">
+                { member.isTyping ? 'is typing...' : chat.lastMsgText }
+              </span>
             </div>
           );
         }
       })
-    );
-  }
-
-  renderFooter(isTyping, text) {
-    // Render the footer, displays 'is typing...' if a user is typing, otherwise last message from chat
-    return (
-      <span className="footer ellipsis">
-        { isTyping ? 'is typing...' : text }
-      </span>
     );
   }
 
