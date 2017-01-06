@@ -8,8 +8,7 @@ import { Chats } from '../../api/chats.js';
 import Message from '../components/Message';
 import TextInput from '../components/TextInput';
 import Splash from '../components/Splash';
-import UsernameById from '../components/UsernameById';
-import NotFoundView from '../components/NotFoundView';
+import NotFound from '../components/NotFound';
 
 import './ChatView.sass';
 
@@ -18,17 +17,13 @@ export class ChatView extends Component {
   componentDidUpdate(nextProps, nextState) {
     // Only scroll down if the amount of messages changes
     if(this.props.messages.length !== nextProps.messages.length) {
-      this.scrollToBottom();
+      Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
     }
-  }
-
-  scrollToBottom() {
-    Scroll.animateScroll.scrollToBottom( { isDynamic: true, containerId: 'messages-view' } );
   }
 
   render() {
     const { currentChatId, messages, currentUser } = this.props;
-    if(!currentUser) return <NotFoundView />;
+    if(!currentUser) return <NotFound />;
     if(!currentChatId && currentUser) return <Splash username={ currentUser.username }/>;
     return (
       <div id="chat" className="chat">
