@@ -14,6 +14,21 @@ export class ChatsList extends Component {
     this.props.setChatId(id);
   }
 
+  renderMembers(chat) {
+    return (
+      chat.members.map((member, i) => {
+        if(member._id !== Meteor.userId()) {
+          return (
+            <div key={ i } className="content">
+              <UsernameById key={ i } isTyping={ member.isTyping } id={ member._id } />
+              { this.renderFooter(member.isTyping, chat.lastMsgText) }
+            </div>
+          );
+        }
+      })
+    );
+  }
+
   renderFooter(isTyping, text) {
     // Render the footer, displays 'is typing...' if a user is typing, otherwise last message from chat
     return (
@@ -28,18 +43,10 @@ export class ChatsList extends Component {
     const isCurrentChat = chat._id === this.props.currentChatId;
     const isSelected = isCurrentChat ? { backgroundColor: '#CFD8DC' } : null;
     return (
-      <div className="list-item" style={ isSelected } onClick={ this.handleClick.bind(this, chat._id) } key={ chat._id }>
-        {
-          chat.members.map((member, i) => {
-            if(member._id === Meteor.userId()) return;
-            return (
-              <div key={ i } className="content">
-                <UsernameById key={ i } isTyping={ member.isTyping } id={ member._id } />
-                { this.renderFooter(member.isTyping, chat.lastMsgText) }
-              </div>
-            );
-          })
-        }
+      <div 
+        key={ chat._id } className="list-item" style={ isSelected }
+        onClick={ this.handleClick.bind(this, chat._id) } >
+        { this.renderMembers(chat) }
       </div>
     );
   }

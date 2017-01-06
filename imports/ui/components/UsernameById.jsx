@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 export class UsernameById extends Component {
   componentDidUpdate() {
+    // Set the text color with a CSS class
     if(this.props.isTyping) {
       ReactDOM.findDOMNode(this).classList.add('is-typing');
     } else {
