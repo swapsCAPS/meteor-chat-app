@@ -17,7 +17,6 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
     // User a member of this chat?
-    console.log(Chats.findOne( { _id: chatId, 'members._id': this.userId } ));
     if(!Chats.findOne( { _id: chatId, 'members._id': this.userId } )){
       throw new Meteor.Error('not-authorized');
     }
