@@ -20,3 +20,11 @@ And the green checkmarks for message received
 - `curl https://install.meteor.com/ | sh`
 - `meteor`
 - `localhost:3000`
+
+### TODO
+- Unread message count in side bar
+- Desktop Notifications
+- Optimise for mobile
+- More than two chat members
+- Avatars
+- Emojis
