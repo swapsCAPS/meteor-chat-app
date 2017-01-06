@@ -1,3 +1,7 @@
+/*
+ * A message component aligned left or right based on message owner
+ * With a checkmark for message read
+ */
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 

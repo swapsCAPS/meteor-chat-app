@@ -17,7 +17,7 @@ export class ChatsList extends Component {
   renderMembers(chat) {
     return (
       chat.members.map((member, i) => {
-        if(member._id !== Meteor.userId()) {
+        if(member._id !== Meteor.userId()) { // Do not include ourselves
           return (
             <div key={ i } className="content">
               <UsernameById key={ i } isTyping={ member.isTyping } id={ member._id } />
@@ -52,11 +52,11 @@ export class ChatsList extends Component {
   }
 
   render() {
-    // Render all chats
+    // Render all chats this user is in
     return (
       <div className="list">
         <h2 className="title">Chats</h2>
-        { this.props.chats.map((c, i) => this.renderListItem(c) ) }
+        { this.props.chats.map((chat, i) => this.renderListItem(chat) ) }
       </div>
     );
   }

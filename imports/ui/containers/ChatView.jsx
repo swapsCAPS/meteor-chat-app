@@ -1,3 +1,6 @@
+/*
+ * The chat view to hold all messages belonging to this chat
+ */
 import React, { Component, PropTypes } from 'react';
 import Scroll from 'react-scroll';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -24,7 +27,7 @@ export class ChatView extends Component {
   render() {
     const { currentChatId, messages, currentUser } = this.props;
     if(!currentUser) return <NotFound />;
-    if(!currentChatId && currentUser) return <Splash username={ currentUser.username }/>;
+    if(!currentChatId) return <Splash username={ currentUser.username }/>;
     return (
       <div id="chat" className="chat">
         <div id="messages-view" className="messages">
