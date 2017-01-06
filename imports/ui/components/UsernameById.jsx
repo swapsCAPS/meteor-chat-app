@@ -1,3 +1,6 @@
+/*
+ * A simple component to render a username by id and flash slightly when a user is typing
+ */
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -29,6 +32,6 @@ UsernameById.propTypes = {
 export default createContainer((props) => {
   Meteor.subscribe('users');
   return {
-    user: Meteor.users.find({ _id: props.id }).fetch()[0],
+    user: Meteor.users.findOne(props.id),
   };
 }, UsernameById);
