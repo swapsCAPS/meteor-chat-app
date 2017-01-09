@@ -23,8 +23,9 @@ And the green checkmarks for message received
 
 ### TODO
 - Unread message count in side bar
-- Desktop Notifications
-- Optimise for mobile
+- Desktop notifications
+- Optimise UI for mobile
+- Define database schemas
 - More than two chat members
 - Avatars
 - Emojis
